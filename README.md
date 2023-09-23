@@ -5,7 +5,6 @@
 ## 使用方法
 1. オブジェクトの作成と階層構造
     1. Create Empty　→　「VReye」「GameController」「SerialHandler」
-    1. Create→Video→VideoPlayer　→　「360Video」
 
 ![image](https://github.com/takumi765/360VideoVRGame_Unity/assets/82143606/527fbfb2-26a5-430b-b8df-35643573fe84)
 
@@ -20,7 +19,8 @@
     1. Assetsの中のGameController.csをアタッチする
 
 5. 360Videoの設定
-    1. 360°動画を読み込み，VideoClip項目からその動画を選択する．
+    1. 360°動画を読み込み，Hielarchy内にドラッグアンドドロップ（画像中の360Videoのこと）
     1. Target Texture項目にNew Render Textureを選択する
-    2. unityエディタ上部の「window」→「Rendering」→「Lighting」→「Environment」→「Skybox Material」をデフォルトではなく，今製作したものに変更する
+    1. unityエディタ上部の「window」→「Rendering」→「Lighting」→「Environment」→「Skybox Material」をデフォルトではなく，今製作したものに変更する
 
+6. 動かしてみましょう
