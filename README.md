@@ -4,31 +4,23 @@
 - 360°動画※ファイル容量が大きかったためpushしていません．ご自身で設定ください
 ## 使用方法
 1. オブジェクトの作成と階層構造
-
-Create Empty　→　「VReye」「GameController」「SerialHandler」
-
-Create→Video→VideoPlayer　→　「360Video」
+    1. Create Empty　→　「VReye」「GameController」「SerialHandler」
+    1. Create→Video→VideoPlayer　→　「360Video」
 
 ![image](https://github.com/takumi765/360VideoVRGame_Unity/assets/82143606/527fbfb2-26a5-430b-b8df-35643573fe84)
 
-3. SerialHandlerの設定
+2. SerialHandlerの設定
+    1. Assetsの中のSerialHandler.csをアタッチする
 
-Assetsの中のSerialHandler.csをアタッチする
+3. MainCameraの設定
+    1. 「VReye」の下の階層にドラッグアンドドロップで持ってくる
+    1. Assets内のrotate.csをアタッチし，Serial Handler項目にSerialHandlerを設定する
 
-4. MainCameraの設定
-
-「VReye」の下の階層にドラッグアンドドロップで持ってくる
-
-Assets内のrotate.csをアタッチし，Serial Handler項目にSerialHandlerを設定する
-
-5. GameControllerの設定
-
-Assetsの中のGameController.csをアタッチする
+4. GameControllerの設定
+    1. Assetsの中のGameController.csをアタッチする
 
 5. 360Videoの設定
+    1. 360°動画を読み込み，VideoClip項目からその動画を選択する．
+    1. Target Texture項目にNew Render Textureを選択する
+    2. unityエディタ上部の「window」→「Rendering」→「Lighting」→「Environment」→「Skybox Material」をデフォルトではなく，今製作したものに変更する
 
-360°動画を読み込み，VideoClip項目からその動画を選択する．
-
-## 注意
-試行錯誤した際にインストールしたものも入ってしまっています．（SkySeries等）
-面倒くさかったので消す"予定"．
