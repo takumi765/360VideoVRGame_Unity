@@ -20,7 +20,7 @@
 
 5. 360Videoの設定
     1. 360°動画を読み込み，Hielarchy内にドラッグアンドドロップ（画像中の360Videoのこと）
-    1. Target Texture項目にNew Render Textureを選択する
+    1.Render ModeをRenderTextureに変更し，Target Texture項目にNew Render Textureを選択する
     1. unityエディタ上部の「window」→「Rendering」→「Lighting」→「Environment」→「Skybox Material」をデフォルトではなく，今製作したものに変更する
 
 6. 動かしてみましょう
