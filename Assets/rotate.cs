@@ -29,12 +29,12 @@ public class rotate : MonoBehaviour
             // オフセット処理
             if(offsetFlag){
                 if(offsetCount >= 7){// 5回目以降の値を取る
-                    Debug.Log("オフセット処理");
+                    Debug.Log("Setting Offset");
                     rollOffset = serialHandler.roll;
                     pitchOffset = serialHandler.pitch;
                     offsetFlag = !offsetFlag;
                     offsetCount = 0;
-                    Debug.Log($"offset roll:{rollOffset}, pitch:{pitchOffset}");
+                    // Debug.Log($"offset roll:{rollOffset}, pitch:{pitchOffset}");
                 }
                 offsetCount++;
             }

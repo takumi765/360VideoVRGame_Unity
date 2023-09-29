@@ -5,6 +5,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System;
 
+using UnityEngine.UI;
 
 public class SerialHandler : MonoBehaviour
 {
@@ -28,10 +29,14 @@ public class SerialHandler : MonoBehaviour
     private bool IsGyrodata = false;
     private bool gyroFlag = false;
     private int countGyrodata = 0;
-    
+    // ジャイロの接続状態
+    private Text gyroState;
+
     void Start()
     {
         Debug.Log("Start");
+        this.gyroState = GameObject.Find("gyroState").GetComponent<Text>();
+        this.gyroState.text = "Start";
         StartCoroutine("Open");
     }
 
@@ -41,6 +46,7 @@ public class SerialHandler : MonoBehaviour
             if (Input.GetKey(KeyCode.Space)){
                 Close();
                 StartCoroutine("Open");
+                this.gyroState.text = "Reconnecting";
             }
         }
     }
@@ -66,9 +72,12 @@ public class SerialHandler : MonoBehaviour
 
     private IEnumerator Open()
     {
+        int connectCount = 0;
         serialStatus = 2;
         while (serialStatus != 1){
-                Debug.Log("センサ接続トライ中");
+            connectCount++;
+            Debug.Log("Reconnecting to Gyro Sensor");
+            this.gyroState.text = $"Reconnecting({connectCount})";
             if (serialStatus == 2){
                 thread2_ = new Thread(SerialOpen);
                 thread2_.Start();
@@ -78,6 +87,7 @@ public class SerialHandler : MonoBehaviour
             thread2_.Join();
             yield return null;
         }
+        this.gyroState.text = "Connected";
         serialPort_.ReadTimeout = 1; // 50
         isRunning_ = true;
 
@@ -106,6 +116,7 @@ public class SerialHandler : MonoBehaviour
             serialPort_.Close();
             serialPort_.Dispose();
         }
+        this.gyroState.text = "Disconnected";
         Debug.Log("CLOSE!");
     }
 
