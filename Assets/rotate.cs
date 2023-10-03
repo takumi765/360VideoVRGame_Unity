@@ -59,10 +59,12 @@ public class rotate : MonoBehaviour
 
             // キーボード入力
             if(Input.GetKey(KeyCode.A)){ // 右
-                rollOffset += 0.5f;
+                // rollOffset += 0.5f;
+                rollOffset -= 0.5f;
             }
             if(Input.GetKey(KeyCode.D)){ // 左
-                rollOffset -= 0.5f;
+                // rollOffset -= 0.5f;
+                rollOffset += 0.5f;
             }
             if(Input.GetKey(KeyCode.W)){ // 上
                 pitchOffset += 0.5f;
