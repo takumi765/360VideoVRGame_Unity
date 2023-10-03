@@ -72,5 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # 360Video&BGM
-/Assets/Scenes/360Video/
-/Assets/Scenes/BGM/
+/Assets/Resources/360Video/
+/Assets/Resources/BGM/

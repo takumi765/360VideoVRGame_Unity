@@ -10,7 +10,7 @@ public class videoPlayer : MonoBehaviour
 
     // シーンの設定
     private int i=0;
-    private string[] Scenes = {"Lake.mp4","Mountain.mp4","Beach.mp4"};
+    private string[] Scenes = {"Lake","Mountain","Beach"};
 
 	void Update()
 	{
@@ -21,7 +21,6 @@ public class videoPlayer : MonoBehaviour
             }else{
                 i++;
             }
-			VideoPlayerComponent.url = $"Assets/Scenes/360Video/{Scenes[i]}";
 		}else  if (Input.GetKeyDown(KeyCode.LeftArrow))
 		{
             if(i-1 < 0){
@@ -29,7 +28,7 @@ public class videoPlayer : MonoBehaviour
             }else{
                 i--;
             }
-			VideoPlayerComponent.url = $"Assets/Scenes/360Video/{Scenes[i]}";
 		}
+        VideoPlayerComponent.clip = Resources.Load<VideoClip>($"360Video/{Scenes[i]}");
 	}
 }
