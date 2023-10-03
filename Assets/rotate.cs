@@ -28,9 +28,10 @@ public class rotate : MonoBehaviour
             double roll, pitch;
             // オフセット処理
             if(offsetFlag){
-                if(offsetCount >= 7){// 5回目以降の値を取る
+                if(offsetCount >= 7){// 5回目以降の値を取る※適当，少し時間がたってからの方が値が安定していそうだから
                     Debug.Log("Setting Offset");
-                    rollOffset = serialHandler.roll;
+                    // rollOffset = serialHandler.roll;
+                    rollOffset = serialHandler.yaw;
                     pitchOffset = serialHandler.pitch;
                     offsetFlag = !offsetFlag;
                     offsetCount = 0;
@@ -38,7 +39,8 @@ public class rotate : MonoBehaviour
                 }
                 offsetCount++;
             }
-            roll = serialHandler.roll - rollOffset;
+            // roll = serialHandler.roll - rollOffset;
+            roll = serialHandler.yaw - rollOffset;
             pitch = serialHandler.pitch - pitchOffset;
 
             // ローパスフィルタ処理
@@ -50,9 +52,24 @@ public class rotate : MonoBehaviour
 
             // ワールド座標を基準に、回転を取得
             Vector3 worldAngle = myTransform.eulerAngles;
-            worldAngle.y = (float)roll;
+            // worldAngle.y = (float)roll;
+            worldAngle.y = -(float)roll;
             worldAngle.x = (float)pitch;
             myTransform.eulerAngles = worldAngle;
+
+            // キーボード入力
+            if(Input.GetKey(KeyCode.A)){ // 右
+                rollOffset += 0.5f;
+            }
+            if(Input.GetKey(KeyCode.D)){ // 左
+                rollOffset -= 0.5f;
+            }
+            if(Input.GetKey(KeyCode.W)){ // 上
+                pitchOffset += 0.5f;
+            }
+            if(Input.GetKey(KeyCode.S)){ // 下
+                pitchOffset -= 0.5f;
+            }
         }
     }
 }

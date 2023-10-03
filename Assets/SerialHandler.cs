@@ -122,8 +122,8 @@ public class SerialHandler : MonoBehaviour
 
     private void Read()
     {
-        int rcv = 0;
-        int pastrcv = 0;
+        int rawData = 0;
+        int pastRawData = 0;
         int plus       = 0;
         int minus      = 0;
         double preRoll = 0;
@@ -138,8 +138,8 @@ public class SerialHandler : MonoBehaviour
 
         while (isRunning_ && serialPort_ != null && serialPort_.IsOpen) {
             try {
-                rcv = serialPort_.ReadByte();
-                // Debug.Log(rcv);
+                rawData = serialPort_.ReadByte();
+                // Debug.Log(rawData);
             } catch (System.Exception e) {
                 Debug.LogWarning(e.Message);
             }
@@ -149,24 +149,24 @@ public class SerialHandler : MonoBehaviour
                 countGyrodata++;
                 switch(countGyrodata){
                     case 1: 
-                        this.roll = rcv; 
+                        this.roll = rawData; 
                         break;
                     case 2: 
-                        this.roll += rcv*Math.Pow(2,8); 
+                        this.roll += rawData*Math.Pow(2,8); 
                         this.roll = this.roll/32768.0*180;
                         break;
                     case 3:
-                        this.pitch = rcv;
+                        this.pitch = rawData;
                         break;
                     case 4:
-                        this.pitch += rcv*Math.Pow(2,8);
+                        this.pitch += rawData*Math.Pow(2,8);
                         this.pitch = this.pitch/32768.0*180;
                         break;
                     case 5:
-                        this.yaw = rcv;
+                        this.yaw = rawData;
                         break;
                     case 6:
-                        this.yaw += rcv*Math.Pow(2,8);
+                        this.yaw += rawData*Math.Pow(2,8);
                         this.yaw = this.yaw/32768.0*180;
                         break;
                     case 7: 
@@ -180,43 +180,54 @@ public class SerialHandler : MonoBehaviour
                     gyroFlag = false;
                     countGyrodata = 0;
                     // センサ値を[-180,180]に変換する
-                    if(this.roll > 180){
-                        this.roll -= 360;
-                    }
+                    // if(this.roll > 180){
+                    //     this.roll -= 360;
+                    // }
                     // センサ値を[0→90→0],[0→-90→0]に変換する
                     if (this.pitch > 180) {
                         this.pitch -= 360;
                     }
                     // センサ値を[-180,180]に変換する
-                    // if (yaw > 180) {
-                    //     yaw -= 360;
-                    // }
+                    if (yaw > 180) {
+                        yaw -= 360;
+                    }
 
-                    if(preRoll*this.roll <= 0){
-                        if(Mathf.Abs((float)this.roll) > 150){
-                            if(preRoll < 0){
+                    // if(preRoll*this.roll <= 0){
+                    //     if(Mathf.Abs((float)this.roll) > 150){
+                    //         if(preRoll < 0){
+                    //             minus++;
+                    //         }else if(preRoll > 0){
+                    //             plus++;
+                    //         }
+                    //     }
+                    //     preRoll=this.roll;
+                    // }
+                    // this.roll += (plus-minus)*360;
+
+                    if(preYaw*this.yaw <= 0){
+                        if(Mathf.Abs((float)this.yaw) > 150){
+                            if(preYaw < 0){
                                 minus++;
-                            }else if(preRoll > 0){
+                            }else if(preYaw > 0){
                                 plus++;
                             }
                         }
-                        preRoll=this.roll;
+                        preYaw=this.yaw;
                     }
-                    this.roll += (plus-minus)*360;
+                    this.yaw += (plus-minus)*360;
 
                     prePitch = this.pitch;
-                    preYaw   = this.yaw;
 
                     // Check
                     // Debug.Log($"roll:{roll}, pitch:{pitch}, yaw:{yaw}");
                 }
             }else{
                 // 取り出したい値がある位置を探す
-                if(rcv==0x53 && pastrcv==0x55){
+                if(rawData==0x53 && pastRawData==0x55){
                     IsGyrodata = true;
                     // Debug.Log("Gyrodata is comming!");
                 }
-                pastrcv = rcv;
+                pastRawData = rawData;
             }
 
             
