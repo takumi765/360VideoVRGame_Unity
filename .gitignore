@@ -74,3 +74,4 @@ crashlytics-build.properties
 # 360Video&BGM
 /Assets/Resources/360Video/
 /Assets/Resources/BGM/
+/Assets/Resources/Logs/

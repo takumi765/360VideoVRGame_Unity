@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,12 @@ using UnityEngine;
 public class rotate : MonoBehaviour
 {
     public SerialHandler serialHandler;
+    GameObject SaveCsv;
+    saveCsv saveCsv_Script;
 
     void Start(){
-        // 
+        SaveCsv = GameObject.Find("SaveCsv");
+        saveCsv_Script = SaveCsv.GetComponent<saveCsv>();
     }
 
     // オフセット変数
@@ -19,6 +23,9 @@ public class rotate : MonoBehaviour
     private double filterGain = 0.75;
     private double preRoll = 0;
     private double prePitch = 0;
+
+    // コントローラ
+    private float controlGain = 0.5f;
 
     void Update(){
         if(serialHandler.serialStatus == 1){
@@ -54,23 +61,29 @@ public class rotate : MonoBehaviour
             Vector3 worldAngle = myTransform.eulerAngles;
             // worldAngle.y = (float)roll;
             worldAngle.y = -(float)roll;
-            worldAngle.x = (float)pitch;
+            worldAngle.x = -(float)pitch;
             myTransform.eulerAngles = worldAngle;
+
+            // Log用
+            saveCsv_Script.horAngle += Mathf.Abs((float)roll - (float)rollOffset);
+            saveCsv_Script.horAngle += Mathf.Abs((float)pitch - (float)pitchOffset);
 
             // キーボード入力
             if(Input.GetKey(KeyCode.A)){ // 右
-                // rollOffset += 0.5f;
-                rollOffset -= 0.5f;
+                rollOffset -= controlGain;
+                saveCsv_Script.horAngleCon += controlGain;
             }
             if(Input.GetKey(KeyCode.D)){ // 左
-                // rollOffset -= 0.5f;
-                rollOffset += 0.5f;
+                rollOffset += controlGain;
+                saveCsv_Script.horAngleCon += controlGain;
             }
-            if(Input.GetKey(KeyCode.W)){ // 上
-                pitchOffset += 0.5f;
+            if(Input.GetKey(KeyCode.S)){ // 上
+                pitchOffset += controlGain;
+                saveCsv_Script.verAngleCon += controlGain;
             }
-            if(Input.GetKey(KeyCode.S)){ // 下
-                pitchOffset -= 0.5f;
+            if(Input.GetKey(KeyCode.W)){ // 下
+                pitchOffset -= controlGain;
+                saveCsv_Script.verAngleCon += controlGain;
             }
         }
     }

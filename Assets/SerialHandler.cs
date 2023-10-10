@@ -116,7 +116,7 @@ public class SerialHandler : MonoBehaviour
             serialPort_.Close();
             serialPort_.Dispose();
         }
-        this.gyroState.text = "Disconnected";
+        // this.gyroState.text = "Disconnected";
         Debug.Log("CLOSE!");
     }
 
